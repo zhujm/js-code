@@ -21,7 +21,8 @@ const debounce = (fn, wait = 100) => {
 
 ```js
 // 计时法
-// 需要注意问题：lastTime应为0，不能为时间戳，以保证至少执行一次: 假设间隔为1000毫秒，如果在900毫秒中被多次触发后停止，使用时间戳则目标函数并不会被执行，很明显是不合理的(这种情况可能不常见,因为创建节流到触发的过程一般会远大于间隔)。
+// 需要注意问题：lastTime应为0，不能为时间戳，以保证至少执行一次: 假设间隔为1000毫秒，如果在900毫秒中被多次触发后停止，
+// 使用时间戳则目标函数并不会被执行，很明显是不合理的(这种情况可能不常见,因为创建节流到触发的过程一般会远大于间隔)。
 function throttle (fn, wait = 100) {
   let lastTime = 0
   return function (...arg) {
@@ -50,7 +51,7 @@ function throttle(fn, wait) {
 
 ```javascript
 // JSON转换 
-// 如果值为函数、undefined，则转换后该字段会丢失；为RegExp、Error等特殊类型会变成空对象
+// 如果值为函数、undefined、Symbol，则转换后该字段会丢失；为RegExp、Error等特殊类型会变成空对象
 // 如果有循环引用，会报错
 const result = JSON.parse(JSON.stringify(obj))
 

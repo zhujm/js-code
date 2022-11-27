@@ -59,5 +59,58 @@ const result = JSON.parse(JSON.stringify(obj))
 循环引用问题，递归爆栈
 ```
 
+new的模拟实现：原理就是利用apply修改this指向，并返回执行结果。
+> 需要注意的是保留原型链和判断执行结果是否是引用类型。
+##### 4. 模拟new
+```javascript
+function new(confuc, ...args) {
+  if(typeof confuc !== 'function'){
+    throw '请传入函数'
+  }
+  let obj = new Object()
+  obj.__proto__ = Object.create(confuc.prototype)
+  let result = confuc.apply(obj, args)
 
+  let isObject = result && typeof result === 'object'
+  let isFunction = typeof result === 'function'
+  return (isObject || isFunction) ? result : obj
+}
+```
 
+##### 模拟call
+call、apply的模拟实现：原理就是运用this指向，目标上新增一个函数挂载当前函数，并传入参数执行。
+简单来说就是在target上新增一个一样的函数，新增函数的this指向的就是target。
+```javascript
+Function.prototype._call = function(context, ...args){
+  const context = context || window
+  context.fn = this
+  var result = context.fn(...args)
+  delete context.fn
+  return result
+}
+
+```
+##### 模拟apply
+```javascript
+Function.prototype._apply = function(context, args){
+  const context = context || window
+  context.fn = this
+  var result = context.fn(...args)
+  delete context.fn
+  return result
+}
+```
+
+##### 模拟bind
+```javascript
+Function.prototype._bind = function(context,...args){
+  const _this = this;
+  const fuc = function(...args2){
+    const newArgs = [...args, ...args2]
+    const target = this instanceOf _this ? this : context
+    _this.apply(target, newArgs);
+  }
+  this.prototype && (fuc.prototype = Object.create(this.prototype))
+  return fuc
+}
+```

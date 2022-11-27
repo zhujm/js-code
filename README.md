@@ -114,3 +114,8 @@ Function.prototype._bind = function(context,...args){
   return fuc
 }
 ```
+
+##### 实现Promise
+
+##### 实现Promise.all/race/any/allSettle
+> 可以使用 promises-aplus-tests 进行测试

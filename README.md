@@ -59,9 +59,9 @@ const result = JSON.parse(JSON.stringify(obj))
 循环引用问题，递归爆栈
 ```
 
+##### 4. 模拟new
 new的模拟实现：原理就是利用apply修改this指向，并返回执行结果。
 > 需要注意的是保留原型链和判断执行结果是否是引用类型。
-##### 4. 模拟new
 ```javascript
 function new(confuc, ...args) {
   if(typeof confuc !== 'function'){
@@ -116,6 +116,7 @@ Function.prototype._bind = function(context,...args){
 ```
 
 ##### 实现Promise
+可以使用[promises-aplus-tests](https://www.npmjs.com/package/promises-aplus-tests)包进行测试
 
 ##### 实现Promise.all/race/any/allSettle
 > 可以使用 promises-aplus-tests 进行测试
